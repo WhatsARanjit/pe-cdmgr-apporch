@@ -60,6 +60,10 @@ Vagrant.configure(2) do |config|
     puppet module install WhatsARanjit/node_manager --modulepath /opt/puppetlabs/puppet/modules
     puppet module install puppetlabs/inifile --modulepath /opt/puppetlabs/puppet/modules
     puppet apply /vagrant/code/app_orch.pp
+    while [ -f /opt/puppetlabs/puppet/cache/state/agent_catalog_run.lock ]; do
+      echo 'Waiting for current Agent run to end...'
+      sleep 10
+    done
     rm -f /opt/puppetlabs/puppet/cache/client_data/catalog/#{hostname}.json
     puppet agent -t
 
