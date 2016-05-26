@@ -1,1 +1,3 @@
 puppet-enterprise*.tar.gz
+*.lock
+.*.swp
