@@ -1,0 +1,33 @@
+::::
+---
+deploy_role: 
+  permissions:
+    - object_type: environment
+      action: deploy_code
+      instance: '*'
+      object_type: tokens
+      action: override_lifetime
+      instance: '*'
+    - object_type: orchestration
+      action: use
+      instance: '*'
+  user_ids: []
+  group_ids: []
+  display_name: Deploy Environments
+  description: Ability to deploy environment 
+
+deploy_user: 
+  login: deploy
+  password: puppetlabs
+  email: deploy@puppetlabs.vm
+  display_name: Deploy User
+  role_ids: [4]
+
+deploy_token: 
+  login: deploy
+  password: puppetlabs
+  lifetime: '0'
+
+deploy_now: 
+  environments: [production]
+  wait: true
