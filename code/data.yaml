@@ -1,7 +1,9 @@
-::::
 ---
 deploy_role: 
   permissions:
+    - object_type: environment
+      action: deploy_code
+      instance: '*'
     - object_type: environment
       action: deploy_code
       instance: '*'
