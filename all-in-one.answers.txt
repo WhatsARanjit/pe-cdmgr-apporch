@@ -70,7 +70,7 @@ q_puppet_enterpriseconsole_httpd_port=443
 
 # String — The password for the console’s admin user. Must be longer than eight
 # characters.
-q_puppet_enterpriseconsole_auth_password=Conversion11
+q_puppet_enterpriseconsole_auth_password=puppetlabs
 
 # String — A publicly accessible hostname where the console can be accessed if
 # the host name resolves to a private interface (e.g., Amazon EC2). This is set
