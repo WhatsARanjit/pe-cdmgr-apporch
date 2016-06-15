@@ -1,4 +1,6 @@
 puppet-enterprise*.tar.gz
 *.lock
 .*.swp
-.vagrant
+.vagrant*
+.bundle/*
+vendor/*
