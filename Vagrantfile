@@ -103,6 +103,13 @@ Vagrant.configure(2) do |config|
 
         curl -s -k https://#{hostname}:8140/packages/current/install.bash | sudo bash
 
+        # Stop firewall
+        puppet resource service firewalld ensure=stopped
+
+        # No SELinux
+        test $(getenforce) == 'Disabled' \
+        || setenforce 0
+
         # Changes exit with 2, which Vagrant doesn't like
         if [ $? -eq 0 ] || [ $? -eq 2 ]; then
           /bin/true
