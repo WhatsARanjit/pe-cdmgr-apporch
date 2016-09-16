@@ -9,7 +9,7 @@
 A Vagrant environment with setup with advanced features of PE.
 
 ## Requirements
-- PE 2016.1.x
+- PE 2016.2.x
 - Vagrant >= 1.7.4
 - Virtual Box >= 4.3.30r101610
 
@@ -21,9 +21,9 @@ vagrant ssh
 ~~~
 
 ### Where is everything?
-1. Console is forwarded to `https://localhost:8443`.
+1. Console is available at `https://10.20.1.2:8443`.
 Login with user: `admin` and password: `puppetlabs`.
-1. A role named `Deploy Environments` is created with
+1. A role named `Code Deployers` is created with
 permissions to deploy code and orchestration jobs.
 1. A user named `deploy` lives in the above group
 with password `puppetlabs`.
