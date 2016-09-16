@@ -30,6 +30,7 @@ def do_https(endpoint, data, api = @classifier_url, method = 'post')
 
   req              = Net::HTTP::Post.new(uri.request_uri) if method == 'post'
   req              = Net::HTTP::Get.new(uri.request_uri)  if method == 'get'
+  req              = Net::HTTP::Put.new(uri.request_uri)  if method == 'put'
   req.body         = data.to_json
   req.content_type = 'application/json'
   res              = http.request(req)
@@ -64,10 +65,11 @@ def api_call(
   api,
   good_codes = ['200'], 
   exist_codes = ['409'],
-  verbose = false
+  verbose = false,
+  method = 'post'
 )
   puts "== Enforcing #{description}"
-  resp = do_https(endpoint, data, api)
+  resp = do_https(endpoint, data, api, method)
 
   if exist_codes.include?(resp.code)
     puts "#{description} already exists"
@@ -81,7 +83,7 @@ def api_call(
   resp
 end
 
-new_role  = api_call('Role', 'roles', @data['deploy_role'], @classifier_url, ['303'], ['409'])
+new_role  = api_call('Role', "roles/#{@data['deploy_role']['id']}", @data['deploy_role'], @classifier_url, ['200'], ['409'], false, 'put')
 new_user  = api_call('User','users', @data['deploy_user'], @classifier_url, ['303'], ['409'])
 new_token = api_call('Token', 'auth/token', @data['deploy_token'], @classifier_url, ['200'], ['401'])
 

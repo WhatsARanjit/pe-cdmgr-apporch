@@ -1,10 +1,10 @@
-pe_version = '2016.1.1'
+pe_version = '2016.2.1'
 os         = 'el'
 release    = '7'
 arch       = 'x86_64'
 pe_dir     = "puppet-enterprise-#{pe_version}-#{os}-#{release}-#{arch}"
 pe_tarball = "#{pe_dir}.tar.gz"
-hostname   = 'puppet2016.1.1.puppetlabs.vm'
+hostname   = "puppet#{pe_version}.puppetlabs.vm"
 nodecount  = 2
 
 Vagrant.configure(2) do |config|
@@ -40,7 +40,7 @@ Vagrant.configure(2) do |config|
 
       # Grab tarball if it doesn't exist
       test -f #{pe_tarball} || (
-        cp /vagrant/#{pe_tarball} .\
+        cp /vagrant/#{pe_tarball} . &> /dev/null \
         || wget --quiet --content-disposition "https://pm.puppetlabs.com/puppet-enterprise/#{pe_version}/#{pe_tarball}" > /dev/null
       )
 
@@ -50,8 +50,8 @@ Vagrant.configure(2) do |config|
 
       # Install PE if not
       cd #{pe_dir}
-      which puppetserver > /dev/null \
-      || ./puppet-enterprise-installer -a /vagrant/all-in-one.answers.txt
+      which puppetserver &> /dev/null \
+      || ./puppet-enterprise-installer -c /vagrant/all-in-one.pe.conf
 
       # Stop firewall
       puppet resource service firewalld ensure=stopped
@@ -74,6 +74,8 @@ Vagrant.configure(2) do |config|
       done
       echo '*' > /etc/puppetlabs/puppet/autosign.conf
       rm -f /opt/puppetlabs/puppet/cache/client_data/catalog/#{hostname}.json
+
+      # Run puppet
       puppet agent -t
 
       # Changes exit with 2, which Vagrant doesn't like

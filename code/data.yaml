@@ -1,13 +1,11 @@
 ---
 deploy_role: 
+  id: 4
   permissions:
     - object_type: environment
       action: deploy_code
       instance: '*'
-    - object_type: environment
-      action: deploy_code
-      instance: '*'
-      object_type: tokens
+    - object_type: tokens
       action: override_lifetime
       instance: '*'
     - object_type: orchestration
@@ -15,8 +13,8 @@ deploy_role:
       instance: '*'
   user_ids: []
   group_ids: []
-  display_name: Deploy Environments
-  description: Ability to deploy environment 
+  display_name: Code Deployers
+  description: Synchronizes code from version control system to Puppet Servers.
 
 deploy_user: 
   login: deploy
