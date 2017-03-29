@@ -2,14 +2,14 @@
 
 #### Table of Contents
 1. [Overview](#overview)
-1. [Requirements] (#requirements)
-1. [Usage] (#usage)
+1. [Requirements](#requirements)
+1. [Usage](#usage)
 
 ## Overview
 A Vagrant environment with setup with advanced features of PE.
 
 ## Requirements
-- PE 2016.2.x
+- PE 2017.1.x
 - Vagrant >= 1.7.4
 - Virtual Box >= 4.3.30r101610
 
