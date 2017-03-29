@@ -1,4 +1,4 @@
-pe_version = '2016.2.1'
+pe_version = '2017.1.1'
 os         = 'el'
 release    = '7'
 arch       = 'x86_64'

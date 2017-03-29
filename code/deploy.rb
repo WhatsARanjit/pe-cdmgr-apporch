@@ -28,9 +28,7 @@ def do_https(endpoint, data, api = @classifier_url, method = 'post')
     http.verify_mode = OpenSSL::SSL::VERIFY_CLIENT_ONCE
   end
 
-  req              = Net::HTTP::Post.new(uri.request_uri) if method == 'post'
-  req              = Net::HTTP::Get.new(uri.request_uri)  if method == 'get'
-  req              = Net::HTTP::Put.new(uri.request_uri)  if method == 'put'
+  req              = Object.const_get("Net::HTTP::#{method.capitalize}").new(uri.request_uri)
   req.body         = data.to_json
   req.content_type = 'application/json'
   res              = http.request(req)
