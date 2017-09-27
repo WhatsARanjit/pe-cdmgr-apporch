@@ -1,0 +1,8 @@
+[user]
+  name = WhatsARanjit
+  email = whatsaranjit@gmail.com
+[color]
+  diff = true
+  status = true
+  branch = true
+  interactive = true

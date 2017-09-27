@@ -29,10 +29,14 @@ Vagrant.configure(2) do |config|
     master.vm.network :private_network, :ip => '10.20.1.2'
     master.vm.provision :hosts, :sync_hosts => true
 
-    # Add host entry
-    #master.vm.provision :hosts do |prov|
-    #  prov.autoconfigure = true
-    #end
+    # Deploy RCs
+    master.vm.provision 'file', source: Dir.getwd + '/rcs/.', destination: '~/'
+    master.vm.provision 'shell' do |s|
+      [ 'bashrc', 'bashrc.puppet', 'extendingrc', 'gemrc'].each do |f|
+        s.privileged = true
+        s.inline = "cp -rf /vagrant/rcs/.#{f} /root/"
+      end
+    end
 
     # Install PE
     master.vm.provision 'shell', inline: <<-SHELL
@@ -66,6 +70,9 @@ Vagrant.configure(2) do |config|
       # Setup app orchestrator
       puppet resource package puppetclassify ensure=installed provider=puppet_gem
       puppet module install WhatsARanjit/node_manager --modulepath /opt/puppetlabs/puppet/modules
+      yum -y install git vim
+      git clone https://WhatsARanjit@github.com/WhatsARanjit/puppet-vim /opt/puppetlabs/puppet/modules/vim
+      puppet apply /opt/puppetlabs/puppet/modules/vim/test/vim_profile.pp
       puppet module install puppetlabs/inifile --modulepath /opt/puppetlabs/puppet/modules
       puppet apply /vagrant/code/app_orch.pp
       while [ -f /opt/puppetlabs/puppet/cache/state/agent_catalog_run.lock ]; do
